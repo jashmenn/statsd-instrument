@@ -114,6 +114,11 @@ module StatsD
     write(key, delta, :incr, sample_rate)
   end
 
+  # gerbals:30|g
+  def self.gauge(key, amount)
+    write(key, amount, :gauge)
+  end
+
   private
 
   def self.socket
@@ -130,6 +135,8 @@ module StatsD
       command << '|c'
     when :ms
       command << '|ms'
+    when :gauge
+      command << '|g'
     end
 
     command << "|@#{sample_rate}" if sample_rate < 1
